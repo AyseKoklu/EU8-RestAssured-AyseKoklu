@@ -1,5 +1,6 @@
 package com.cybertek.day3;
 
+import com.cybertek.utilities.HRTestBase;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,13 +10,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ORDSApiTestsWithParameters {
-
-    @BeforeAll
-    public static void init() {
-        // save baseurl inside this variable so that we dont need to type each http method.
-        baseURI = "http://54.159.143.93:1000/ords/hr";
-    }
+public class ORDSApiTestsWithParameters extends HRTestBase {
 
     /*
         Given accept type is Json
