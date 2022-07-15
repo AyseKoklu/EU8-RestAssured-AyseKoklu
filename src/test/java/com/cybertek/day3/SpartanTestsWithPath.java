@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
@@ -34,11 +36,11 @@ public class SpartanTestsWithPath {
 
     @DisplayName("GET one spartan with Path Method")
     @Test
-    public void test1(){
+    public void test1() {
         Response response = given().accept(ContentType.JSON)
                 .and().pathParams("id", 10)
                 .when()
-                .get("api/spartans/{id}");
+                .get("/api/spartans/{id}");
 
         assertEquals(200, response.statusCode());
         assertEquals("application/json", response.contentType());
@@ -64,8 +66,34 @@ public class SpartanTestsWithPath {
         assertEquals("Lorenza", name);
         assertEquals("Female", gender);
         assertEquals(3312820936l, phone);
-
-
     }
 
+    @DisplayName("GET all spartans and navigate with Path()")
+    @Test
+    public void test2() {
+        Response response = given().accept(ContentType.JSON)
+                .when()
+                .get("/api/spartans");
+
+        // response.prettyPrint();
+
+        int firstId = response.path("id[0]");
+        System.out.println("firstId = " + firstId);
+
+        String name = response.path("name[0]");
+        System.out.println("name = " + name);
+
+        String lastFirstName = response.path("name[-1]");
+        System.out.println("lastFirstName = " + lastFirstName);
+
+        // save names inside the list of string
+        List<String> names = response.path("name");
+        System.out.println(names);
+
+        // print each name one by one
+        for (String n : names) {
+            System.out.println(n);
+        }
+
+    }
 }
